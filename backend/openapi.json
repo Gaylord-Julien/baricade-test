@@ -1,0 +1,321 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/interest-points": {
+      "get": {
+        "operationId": "InterestPointsController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InterestPoint"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "List every interest point",
+        "tags": [
+          "interest-points"
+        ]
+      },
+      "post": {
+        "operationId": "InterestPointsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateInterestPointDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InterestPoint"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid payload"
+          }
+        },
+        "summary": "Create an interest point",
+        "tags": [
+          "interest-points"
+        ]
+      }
+    },
+    "/api/door-to-door-reports": {
+      "get": {
+        "operationId": "DoorToDoorReportsController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DoorToDoorReport"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "List every door-to-door report",
+        "tags": [
+          "door-to-door-reports"
+        ]
+      },
+      "post": {
+        "operationId": "DoorToDoorReportsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDoorToDoorReportDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DoorToDoorReport"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid payload"
+          }
+        },
+        "summary": "Submit a door-to-door report",
+        "tags": [
+          "door-to-door-reports"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "TokTok API",
+    "description": "Interest points and door-to-door reports",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "InterestPointStatus": {
+        "type": "string",
+        "enum": [
+          "favorable",
+          "undecided",
+          "unfavorable",
+          "absent"
+        ]
+      },
+      "InterestPoint": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "longitude": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180,
+            "example": 1.0993
+          },
+          "latitude": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90,
+            "example": 49.4431
+          },
+          "status": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/InterestPointStatus"
+              }
+            ]
+          },
+          "weight": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          },
+          "label": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "longitude",
+          "latitude",
+          "status",
+          "weight"
+        ]
+      },
+      "CreateInterestPointDto": {
+        "type": "object",
+        "properties": {
+          "longitude": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180,
+            "example": 1.0993
+          },
+          "latitude": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90,
+            "example": 49.4431
+          },
+          "status": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/InterestPointStatus"
+              }
+            ]
+          },
+          "label": {
+            "type": "string",
+            "maxLength": 200
+          }
+        },
+        "required": [
+          "longitude",
+          "latitude",
+          "status"
+        ]
+      },
+      "DoorToDoorRole": {
+        "type": "string",
+        "enum": [
+          "individual",
+          "group"
+        ]
+      },
+      "DoorToDoorReport": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "role": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DoorToDoorRole"
+              }
+            ]
+          },
+          "groupName": {
+            "type": "string"
+          },
+          "knockedDoorCount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "openedDoorCount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "comment": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "longitude": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180
+          },
+          "latitude": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "role",
+          "knockedDoorCount",
+          "openedDoorCount"
+        ]
+      },
+      "CreateDoorToDoorReportDto": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DoorToDoorRole"
+              }
+            ]
+          },
+          "groupName": {
+            "type": "string",
+            "maxLength": 100,
+            "description": "Required when role is \"group\""
+          },
+          "knockedDoorCount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "openedDoorCount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "comment": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "longitude": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180
+          },
+          "latitude": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90
+          }
+        },
+        "required": [
+          "role",
+          "knockedDoorCount",
+          "openedDoorCount"
+        ]
+      }
+    }
+  }
+}

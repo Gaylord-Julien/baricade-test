@@ -15,7 +15,7 @@ async function bootstrap(): Promise<void> {
   SwaggerModule.setup(`${GLOBAL_PREFIX}/docs`, app, createOpenApiDocument(app));
 
   const configService = app.get<ConfigService<AppConfig, true>>(ConfigService);
-  await app.listen(configService.get('port', { infer: true }));
+  await app.listen(configService.get('port', { infer: true }), '0.0.0.0');
 }
 
 await bootstrap();

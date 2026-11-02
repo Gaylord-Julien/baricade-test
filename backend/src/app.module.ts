@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { loadAppConfig } from './config/app-config.js';
 import { DoorToDoorReportsModule } from './door-to-door-reports/door-to-door-reports.module.js';
+import { HealthModule } from './health/health.module.js';
 import { InterestPointsModule } from './interest-points/interest-points.module.js';
 
 @Module({
@@ -13,6 +14,7 @@ import { InterestPointsModule } from './interest-points/interest-points.module.j
     }),
     InterestPointsModule,
     DoorToDoorReportsModule,
+    HealthModule,
   ],
 })
 export class AppModule {}

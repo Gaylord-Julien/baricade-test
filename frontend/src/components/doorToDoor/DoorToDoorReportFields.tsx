@@ -5,7 +5,7 @@ import type { ReactNode } from 'react'
 import { useWatch } from 'react-hook-form'
 
 import type { DoorToDoorReportFormControl } from '../../hooks/useDoorToDoorReportForm'
-import { COMMENT_MAXIMUM_LENGTH } from '../../schemas/doorToDoorReportSchema'
+import { MAXIMUM_COMMENT_LENGTH } from '../../schemas/doorToDoorReportSchema'
 import type { DoorToDoorRole } from '../../types/doorToDoorReport'
 import { FormTextField } from './FormTextField'
 
@@ -87,7 +87,7 @@ export function DoorToDoorReportFields({
         control={control}
         multiline
         minRows={3}
-        slotProps={{ htmlInput: { maxLength: COMMENT_MAXIMUM_LENGTH } }}
+        slotProps={{ htmlInput: { maxLength: MAXIMUM_COMMENT_LENGTH } }}
       />
     </Stack>
   )

@@ -1,11 +1,9 @@
-import type { InterestPointStatus } from '../types/interestPoint'
+import {
+  type InterestPointStatus,
+  interestPointStatuses,
+} from '../types/interestPoint'
 
-export const interestPointStatuses: readonly InterestPointStatus[] = [
-  'favorable',
-  'undecided',
-  'unfavorable',
-  'absent',
-]
+export { interestPointStatuses } from '../types/interestPoint'
 
 export const interestPointStatusLabels: Record<InterestPointStatus, string> = {
   favorable: 'Favorable',

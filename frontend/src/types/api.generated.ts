@@ -198,3 +198,13 @@ export interface operations {
         };
     };
 }
+type FlattenedDeepRequired<T> = {
+    [K in keyof T]-?: FlattenedDeepRequired<T[K] extends unknown[] | undefined | null ? Extract<T[K], unknown[]>[number] : T[K]>;
+};
+type ReadonlyArray<T> = [
+    Exclude<T, undefined>
+] extends [
+    unknown[]
+] ? Readonly<Exclude<T, undefined>> : Readonly<Exclude<T, undefined>[]>;
+export const interestPointStatusValues: ReadonlyArray<FlattenedDeepRequired<components>["schemas"]["InterestPointStatus"]> = ["favorable", "undecided", "unfavorable", "absent"];
+export const doorToDoorRoleValues: ReadonlyArray<FlattenedDeepRequired<components>["schemas"]["DoorToDoorRole"]> = ["individual", "group"];

@@ -1,9 +1,11 @@
 import { z } from 'zod'
 
-import type { NewDoorToDoorReport } from '../types/doorToDoorReport'
+import {
+  doorToDoorRoles,
+  type NewDoorToDoorReport,
+} from '../types/doorToDoorReport'
 
-export const DOOR_TO_DOOR_ROLES = ['individual', 'group'] as const
-export const COMMENT_MAXIMUM_LENGTH = 500
+export const MAXIMUM_COMMENT_LENGTH = 500
 
 const doorCountSchema = z
   .string()
@@ -14,8 +16,8 @@ const doorCountSchema = z
 export const doorToDoorReportSchema = z
   .object({
     role: z
-      .union([z.enum(DOOR_TO_DOOR_ROLES), z.literal('')])
-      .pipe(z.enum(DOOR_TO_DOOR_ROLES, { error: 'Choisissez votre rôle' })),
+      .union([z.enum(doorToDoorRoles), z.literal('')])
+      .pipe(z.enum(doorToDoorRoles, { error: 'Choisissez votre rôle' })),
     groupName: z.string().trim(),
     knockedDoorCount: doorCountSchema,
     openedDoorCount: doorCountSchema,
@@ -23,8 +25,8 @@ export const doorToDoorReportSchema = z
       .string()
       .trim()
       .max(
-        COMMENT_MAXIMUM_LENGTH,
-        `${String(COMMENT_MAXIMUM_LENGTH)} caractères maximum`,
+        MAXIMUM_COMMENT_LENGTH,
+        `${String(MAXIMUM_COMMENT_LENGTH)} caractères maximum`,
       ),
   })
   .superRefine((values, context) => {
